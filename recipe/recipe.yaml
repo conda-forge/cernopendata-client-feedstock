@@ -14,14 +14,14 @@ source:
   sha256: 9d829c78434d5117806dea112fd276bade8c8d8cb93a10383c69f20845243a12
 
 build:
-  number: 0
+  number: 1
+  noarch: python
 
 outputs:
   - package:
       name: cernopendata-client
 
     build:
-      noarch: python
       script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
       python:
         entry_points:
@@ -50,7 +50,10 @@ outputs:
       name: cernopendata-client-pycurl
 
     requirements:
+      host:
+        - python ${{ python_min }}.*
       run:
+        - python >=${{ python_min }}
         - ${{ pin_subpackage("cernopendata-client", upper_bound="x.x.x") }}
         - pycurl >=7
 
@@ -65,7 +68,10 @@ outputs:
       name: cernopendata-client-xrootd
 
     requirements:
+      host:
+        - python ${{ python_min }}.*
       run:
+        - python >=${{ python_min }}
         - ${{ pin_subpackage("cernopendata-client", upper_bound="x.x.x") }}
         - xrootd >=4.12.2
 
